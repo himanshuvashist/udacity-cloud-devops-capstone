@@ -2,21 +2,26 @@ pipeline {
 
     agent any
     stages {
-        stage('testing1'){
+        stage('Lint dockerfile'){
             steps{
                 script{
-                    sh "echo 'TESTING STAGE 1'"
+                    sh "make lint"
                 }
             }
 
         }
-        stage('testing2'){
+        stage('build dockerimage'){
             steps{
-                script{
-                    sh "echo 'TESTING STAGE 2'"
-                }
+                sh "docker build -t udacity-cloud-devops-capstone ."
             }
-
+        }
+        stage('host dockerimage'){
+            steps {
+                  withDockerRegistry([url: "", credentialsId: "docker-hub-credentials"]) {
+                      sh "docker tag capstone-project-cloud-devops himanshuvashist/test"
+                      sh 'docker push himanshuvashist/test'
+                  }
+              }
         }
     }
 }

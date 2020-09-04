@@ -7,7 +7,7 @@ WORKDIR /app
 
 RUN npm install --silent
 
-COPY ./src /app/src/ 
+COPY ./src /app/src/
 COPY ./public /app/public
 
 RUN npm run build
