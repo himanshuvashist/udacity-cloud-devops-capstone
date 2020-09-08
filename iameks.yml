@@ -37,7 +37,7 @@ Resources:
         - Key: Name
           Value: !Sub "${EnvironmentName}-vpcId"
 
-  ec2Role:
+  nodeRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -61,13 +61,20 @@ Resources:
   eksCluster:
     Type: AWS::EKS::Cluster
     Properties:
-      Name: String
+      Name: firstClusterTesting
       ResourcesVpcConfig:
         SecurityGroupIds:
-          - !Sub "${EnvironmentName}-SecurityGroupOne"
+          - Fn::ImportValue: !Sub "${EnvironmentName}-SecurityGroupOne"
         SubnetIds:
-          - !Sub ${EnvironmentName}-PUB-SUB-01
-          - !Sub ${EnvironmentName}-PUB-SUB-02
-          - !Sub ${EnvironmentName}-PVT-SUB-01
-          - !Sub ${EnvironmentName}-PVT-SUB-02
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PUB-SUB-01
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PUB-SUB-02
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PVT-SUB-01
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PVT-SUB-02
       RoleArn: !GetAtt clusterRole.Arn
+
+Outputs:
+  NodeRoleOutput:
+    Description: The VPC Id
+    Value: !GetAtt nodeRole.Arn
+    Export:
+      Name: !Sub "${EnvironmentName}-nodeRole"

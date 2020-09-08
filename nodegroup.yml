@@ -1,0 +1,22 @@
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: Environment name for identifying resources by prefixing in name key
+
+Resources:
+  eksNodeGroup:
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: firstClusterTesting
+      DiskSize: 30
+      InstanceTypes:
+        - t2.micro
+      NodegroupName: firstNodeGroupTesting
+      NodeRole:
+        - Fn::ImportValue: !Sub "${EnvironmentName}-nodeRole"
+      ScalingConfig:
+        DesiredSize: 1
+        MaxSize: 1
+        MinSize: 1
+      Subnets:
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PVT-SUB-01"
