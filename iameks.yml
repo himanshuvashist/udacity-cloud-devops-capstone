@@ -1,0 +1,73 @@
+Description: roles to be used by eks setup
+
+Parameters:
+  ManagedPolicyARNOne:
+    Type: String
+    Description: ManagedPolicyARNOne
+  ManagedPolicyARNTwo:
+    Type: String
+    Description: ManagedPolicyARNTwo
+  ManagedPolicyARNThree:
+    Type: String
+    Description: ManagedPolicyARNThree
+  ManagedPolicyARNFour:
+    Type: String
+    Description: ManagedPolicyARNFour
+  EnvironmentName:
+    Type: String
+    Description: Environment name for identifying resources by prefixing in name key
+
+Resources:
+  clusterRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "eks.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - !Ref ManagedPolicyARNOne
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvironmentName}-vpcId"
+
+  ec2Role:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - !Ref ManagedPolicyARNTwo
+        - !Ref ManagedPolicyARNThree
+        - !Ref ManagedPolicyARNFour
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvironmentName}-vpcId"
+
+  eksCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: String
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - !Sub "${EnvironmentName}-SecurityGroupOne"
+        SubnetIds:
+          - !Sub ${EnvironmentName}-PUB-SUB-01
+          - !Sub ${EnvironmentName}-PUB-SUB-02
+          - !Sub ${EnvironmentName}-PVT-SUB-01
+          - !Sub ${EnvironmentName}-PVT-SUB-02
+      RoleArn: !GetAtt clusterRole.Arn

@@ -1,0 +1,16 @@
+[{
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "DevopsCapstone"
+}, {
+    "ParameterKey": "ManagedPolicyARNOne",
+    "ParameterValue": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}, {
+    "ParameterKey": "ManagedPolicyARNTwo",
+    "ParameterValue": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+}, {
+    "ParameterKey": "ManagedPolicyARNThree",
+    "ParameterValue": "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+}, {
+    "ParameterKey": "ManagedPolicyARNFour",
+    "ParameterValue": "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}]
