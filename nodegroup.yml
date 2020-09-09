@@ -2,6 +2,9 @@ Parameters:
   EnvironmentName:
     Type: String
     Description: Environment name for identifying resources by prefixing in name key
+  # NodeRoleArn:
+  #   Type: String
+  #   Description: node role arn
 
 Resources:
   eksNodeGroup:
@@ -10,13 +13,14 @@ Resources:
       ClusterName: firstClusterTesting
       DiskSize: 30
       InstanceTypes:
-        - t2.micro
+        - t2.medium
       NodegroupName: firstNodeGroupTesting
       NodeRole:
-        - Fn::ImportValue: !Sub "${EnvironmentName}-nodeRole"
+        arn:aws:iam::909937860942:role/test12-nodeRole-1DEKBC1Z2XH9M
+        # - Fn::ImportValue: !Sub "${EnvironmentName}-nodeRole"
       ScalingConfig:
         DesiredSize: 1
-        MaxSize: 1
+        MaxSize: 2
         MinSize: 1
       Subnets:
         - Fn::ImportValue: !Sub "${EnvironmentName}-PVT-SUB-01"

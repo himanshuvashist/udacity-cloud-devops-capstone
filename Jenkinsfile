@@ -23,5 +23,22 @@ pipeline {
                   }
               }
         }
+        stage('deploy'){
+            steps{
+                withAWS(credentials:'aws',region:'us-west-2'){
+                    sh "aws eks update-kubeconfig --name firstClusterTesting"
+                    sh "kubectl apply -n beruspace -f deployment.yml"
+                    sh "kubectl get nodes"
+                    sh "kubectl get pods -n beruspace"
+                    sh "kubectl get svc -n beruspace"
+                }
+            }
+        }
+        stage("Cleaning up") {
+              steps{
+                    echo 'Cleaning up...'
+                    sh "docker system prune"
+              }
+        }
     }
 }
