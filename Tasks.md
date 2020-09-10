@@ -19,7 +19,7 @@
 
 - [x] Use Ansible or CloudFormation to build your “infrastructure”; i.e., the Kubernetes Cluster.
 - [ ] It should create the EC2 instances (if you are building your own), set the correct networking settings, and deploy software to these instances.
-- [ ] As a final step, the Kubernetes cluster will need to be initialized. The Kubernetes cluster initialization can either be done by hand, or with Ansible/Cloudformation at the student’s discretion.
+- [x] As a final step, the Kubernetes cluster will need to be initialized. The Kubernetes cluster initialization can either be done by hand, or with Ansible/Cloudformation at the student’s discretion.
 
 #### Step 4: Build your pipeline
 

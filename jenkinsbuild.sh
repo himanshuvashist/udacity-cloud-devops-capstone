@@ -1,0 +1,1 @@
+docker run --name $1 -p 8090:8080 -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins
