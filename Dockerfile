@@ -3,7 +3,7 @@ FROM node:lts as builder_base
 
 COPY package.json package-lock.json /app/
 
-WORKDIR /app
+WORKDIRI /app
 
 RUN npm install --silent
 
